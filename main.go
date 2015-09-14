@@ -2,10 +2,23 @@ package main
 
 import (
 	"flag"
-	"ftm"
+	"fmt"
+	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
 )
+
+func wsHandler(w ResponseWriter, r *Request) {
+	//from gorilla
+	conn, err := websocket.Upgrade(w, r, nil, 1024, 1024)
+	if _, ok := err.(websocket.HandshakeError); ok {
+		http.Error(w, "Not a websocket handshake", 400)
+		return
+	} else if err != nil {
+		log.Println(err)
+		return
+	}
+}
 
 func main() {
 	// CL flags
@@ -17,6 +30,7 @@ func main() {
 	fs := http.Dir(*dir)
 	fileHandler := http.FileServer(fs)
 	http.Handle("/", fileHandler)
+	http.HandleFunc("/ws", wsHandler)
 
 	log.Printf("Running on port %d\n", *port)
 
