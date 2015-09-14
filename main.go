@@ -48,6 +48,8 @@ func main() {
 	dir := flag.String("directory", "web/", "directory of web files")
 	flag.Parse()
 
+	connections = make(map[*websocket.Conn]bool)
+
 	// handle all requests by serving a file of the same name.
 	fs := http.Dir(*dir)
 	fileHandler := http.FileServer(fs)
