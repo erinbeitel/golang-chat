@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func wsHandler(w ResponseWriter, r *Request) {
+func wsHandler(w http.ResponseWriter, r *http.Request) {
 	//from gorilla
 	conn, err := websocket.Upgrade(w, r, nil, 1024, 1024)
 	if _, ok := err.(websocket.HandshakeError); ok {
@@ -17,6 +17,17 @@ func wsHandler(w ResponseWriter, r *Request) {
 	} else if err != nil {
 		log.Println(err)
 		return
+	}
+	defer conn.Close()
+	for {
+		_, msg, err := conn.ReadMessage()
+		if err != nil {
+			return
+		}
+		log.Println(string(msg))
+		if err = conn.WriteMessage(websocket.TextMessage, msg); err != nil {
+			return
+		}
 	}
 }
 
