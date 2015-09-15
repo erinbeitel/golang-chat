@@ -1,1 +1,1 @@
-web: go vim main.go
+web: go run main.go
