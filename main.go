@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/gorilla/websocket"
+	"github.com/erinbeitel/golang-chat/Godeps/_workspace/src/github.com/gorilla/websocket"
 	"log"
 	"net/http"
 )
