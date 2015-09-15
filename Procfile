@@ -1,1 +1,1 @@
-web: go get main.go
+web: go vim main.go
