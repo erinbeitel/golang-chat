@@ -20,7 +20,7 @@
       app.controller("MainCt1", ["$scope", function($scope){
         $scope.messages = [];
 
-        var conn = new WebSocket("ws://nameless-forest-1961.herokuapp.com/ws");
+        var conn = new WebSocket("ws://localhost:8000/ws");
 
         conn.onclose = function(e){
           $scope.$apply(function(){
