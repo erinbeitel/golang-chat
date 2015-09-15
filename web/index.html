@@ -1,0 +1,52 @@
+<html ng-app="golang-chat">
+  <head>
+    <title>Golang Chat</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  </head>
+  <body ng-controller="MainCt1">
+    <div class="jumbotron">
+      <h1>Chat</h1>
+    </div>
+    <div class="container">
+    <ul>
+      <li ng-repeat="m in messages">{{m}}</li>
+    </ul>
+    <input type="text" placeholder="Lets chat!" ng-model="msg"><button class="btn btn-primary" ng-click="send()">Send</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+    <script>
+      var app = angular.module("golang-chat", []);
+      
+      app.controller("MainCt1", ["$scope", function($scope){
+        $scope.messages = [];
+
+        var conn = new WebSocket("ws://localhost:8000/ws");
+
+        conn.onclose = function(e){
+          $scope.$apply(function(){
+            $scope.messages.push("DISCONNECTED")
+          })
+        }
+
+        conn.onopen = function(e){
+          $scope.$apply(function(){
+            $scope.messages.push("CONNECTED")
+          })
+        }
+
+        conn.onmessage = function(e){
+          $scope.$apply(function(){
+            $scope.messages.push(e.data);
+          })
+        }
+        
+        $scope.send = function(){
+          conn.send($scope.msg);
+          $scope.msg = '';
+        }
+
+      }])
+    </script>
+    </div>
+  </body>
+</html>
