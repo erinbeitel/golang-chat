@@ -1,6 +1,10 @@
 # golang-chat
 A creation from phase 3 of DevBootcamp: new technology "discovery project": golang + angular.js. 
 
+Walk through of the app: 
+[Part1] (https://youtu.be/UEucu9PjzC0)
+[Part2] (https://youtu.be/dV4SC6KJQC8)
+
 ## GO / Angular project
 
 ### Setup: 
