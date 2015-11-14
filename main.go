@@ -62,12 +62,32 @@ func checkPort (port int) error {
 func TestCheckPort (t *testing.T) {
 	failMessage := "Failed testing of checkPort() function."
 
-	if checkPort(-1) == nil {
+  if checkPort(-1) == nil {
+    t.Errorf(failMessage)
+  } else if checkPort(00000000) == nil {
+    t.Errorf(failMessage)
+  } else if checkPort(99999999) == nil {
+    t.Errorf(failMessage)
+  }
+}
+
+func checkDir (dir string) error {
+	if (len(dir) == 0) {
+		return errors.New("The length of the directory string was zero.")
+	} else if dir == "/" {
+		return errors.New("Can not run the webserver from the filesystem root. This was probably an accident.")
+	} else {
+		return nil
+	}
+}
+
+func TestCheckDir (t *testing.T) {
+	failMessage := "Failed testing of checkDir() function."
+
+	if checkDir("/") == nil {
 		t.Errorf(failMessage)
-	} else if checkPort(00000000) == nil {
+	} else if checkDir("usr/bin/test") == nil {
 		t.Errorf(failMessage)
-	} else if checkPort(99999999) == nil {
-	t.Errorf(failMessage)
 	}
 }
 
