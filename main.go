@@ -47,16 +47,15 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 
 
 func checkPort (port int) error {
-
-		if port > 65535 {
-			return errors.New("Port can not be greater than 65535")
-		} else if port < 0 {
-			return errors.New("Port can not be negative.")
-		} else if port < 1024 {
-			return errors.New("Ports must be between 1024 and 65535")
-		} else {
-			return nil
-		}
+	if port > 65535 {
+		return errors.New("Port can not be greater than 65535")
+	} else if port < 0 {
+		return errors.New("Port can not be negative.")
+	} else if port < 1024 {
+		return errors.New("Ports must be between 1024 and 65535")
+	} else {
+		return nil
+	}
 }
 
 
@@ -68,7 +67,7 @@ func TestCheckPort (t *testing.T) {
 	} else if checkPort(00000000) == nil {
 		t.Errorf(failMessage)
 	} else if checkPort(99999999) == nil {
-		t.Errorf(failMessage)
+	t.Errorf(failMessage)
 	}
 }
 
