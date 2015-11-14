@@ -60,7 +60,7 @@ func checkPort (port int) error {
 
 
 func TestCheckPort (t *testing.T) {
-	failMessage := "Failed testing of checkPort() function."
+  failMessage := "Failed testing of checkPort() function."
 
   if checkPort(-1) == nil {
     t.Errorf(failMessage)
